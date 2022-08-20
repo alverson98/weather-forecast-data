@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+
+    <!-- Linked stylesheets -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+      <link
+      rel="stylesheet"
+      href="./assets/css/style.css"
+    />
+  </head>
+  <body>
+    <!-- Heading of webpage -->
+    <header>
+      <h1>Weather Dashboard</h1>
+    </header>
+
+    <!-- Search section -->
+    <section>
+      <!-- City search -->
+      <label for="city">Search City Name:</label>
+      <input type="text" />
+
+      <!-- Search history here -->
+      <ul id="search-history"></ul>
+    </section>
+    <!-- Weather content -->
+    <main>
+      <!-- Heading for current weather -->
+      <h2>Current Weather</h2>
+      <!-- Current weather section -->
+      <div id="current-weather">
+        <!-- - the city name
+    - the date
+    - an icon representation of weather conditions
+    - the temperature
+    - the humidity
+    - the wind speed 
+    - the UV index -->
+      </div>
+
+      <!-- Forecast -->
+      <div id="forecast">
+        <h2>5-day Forecast</h2>
+        <!-- appended div for each day -->
+        <!-- - the date
+    - icon representation of weather conditions
+    - the temperature
+    - the wind speed
+    - the humidity -->
+      </div>
+    </main>
+  </body>
+</html>

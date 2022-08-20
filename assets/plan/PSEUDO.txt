@@ -1,0 +1,63 @@
+USER STORY:
+
+- AS A traveler
+- I WANT to see the weather outlook for multiple cities
+- SO THAT I can plan a trip accordingly
+
+------------------------------------------
+
+ACCEPTANCE CRITERIA:
+
+- searching a city presents with current and future conditions for that city and that city is added to the search history
+- current weather conditions show:
+    - the city name
+    - the date
+    - an icon representation of weather conditions
+    - the temperature
+    - the humidity
+    - the wind speed 
+    - the UV index
+- UV index shows a color that indicates whether the conditions are favorable, moderate, or severe
+- future weather shows a 5-day forecast that displays: 
+    - the date
+    - icon representation of weather conditions
+    - the temperature
+    - the wind speed
+    - the humidity
+- clicking city in search history shows current and future conditions for that city
+
+--------------------------------------------
+
+LAYOUT/ FORMAT/ APPEARANCE:
+
+- Weather dashboard heading
+- Search for city on the left side 
+    - city search heading
+    - search input & search button
+    - city history result buttons below
+- Right side display current weather conditions 
+    - (see above for required information)
+- Below show 5-day forecast 
+    - (see above for required information)
+
+---------------------------------------------
+
+NEED TO INCLUDE:
+
+- Data from server-side API's 
+- Dynamically updated HTML & CSS
+- Use localStorage to store any persistent data
+    - get/set item
+
+----------------------------------------------
+
+BRAIN DUMP:
+
+- will need 'click' listeners for all buttons
+    - search history
+    - search button
+- input that saves to local storage & display below search bar 
+    - append button to li, li to ul
+- if else statements
+- AJAX calls to geo, current forecast, 5-day forecast & then UV
+- user needs to enter valid city
