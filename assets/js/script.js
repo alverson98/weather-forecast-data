@@ -4,13 +4,12 @@ $(document).ready(function () {
   // HTML id variables
   var cityInput = $("#city-input");
   var searchHistory = $("#search-history");
-  var currentWeather = $("#current-weather");
   var forecastWeather = $("#forecast");
   var submitBtn = $("#submit-btn");
 
   // Search variables
   var cityName = "";
-  var cityHistory = [];
+  var cityHistoryArray = [];
 
   // API - weatherbit.io
   var currentWeatherURL =
@@ -23,12 +22,8 @@ $(document).ready(function () {
     cityName +
     "&country=US&key=020dba26b42c4d61b7324a5ea43152c7&units=I&days=5";
 
-  // Calling functions for API calls
-  getCurrentWeather();
-  getForecastWeather();
-
   // Current Weather Data
-  function getCurrentWeather() {
+  function getCurrentWeather(cityName) {
     fetch(currentWeatherURL)
       .then(function (response) {
         return response.json();
@@ -49,7 +44,7 @@ $(document).ready(function () {
   }
 
   // Forecasted Weather
-  function getForecastWeather() {
+  function getForecastWeather(cityName) {
     fetch(forecastWeatherURL)
       .then(function (response) {
         return response.json();
@@ -73,9 +68,24 @@ $(document).ready(function () {
     var clickEvent = $(event.target);
     // new city vs. city history select
     if (clickEvent.id === submitBtn) {
-      var chosenCity = $(cityInput).val().trim();
+      var cityName = $(cityInput).val().trim();
     } else {
-      var chosenCity = clickEvent.innerText;
+      var cityName = clickEvent.innerText;
     }
+
+    // Calling functions for API calls
+    getCurrentWeather(cityName);
+    getForecastWeather(cityName);
+
+    // Calling Local storage function update
+    updateStorage(cityName);
   });
+
+  // Local Storage
+  function updateStorage(cityName) {
+    var cityHistory = JSON.parse(localStorage.getItem(cityHistory));
+    cityHistory.push(cityHistoryArray);
+
+    localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+  }
 });
