@@ -1,13 +1,50 @@
 $(document).ready(function () {
   // VARIABLE DECLARATIONS
 
-  // HTML id variables
+  // Search Section
   var cityInput = $("#city-input");
-  var searchHistory = $("#search-history");
-  var forecastWeather = $("#forecast");
   var submitBtn = $("#submit-btn");
+  var searchHistory = $("#search-history");
+  
+// Current Weather Section
+var currentCityDate = $("#current-city-date");
+var currentIcon = $("#current-icon")
+var currentDescription = $("#current-description")
+var currentTemp = $("#current-temp")
+var currentHumidity = $("#current-humidity")
+var currentWindSpeed = $("#current-wind-speed")
+var currentUV = $("#currentUV")
 
-  // Search variables
+// Forecast Section
+  var forecastWeather = $("#forecast-div");
+  var forecastCardTitle = $("h4")
+  var forecastLiIcon = $("<li></li>")
+  var spanIcon = $("<span></span>")
+  var forecastLiDescription = $("<li></li>")
+  var spanDescription = $("<span></span>")
+  var forecastLiHighTemp = $("<li></li>")
+  var spanHigh = $("<span></span>")
+  var forecastLiLowTemp = $("<li></li>")
+  var spanLow = $("<span></span>")
+  var forecastLiHumidity = $("<li></li>")
+  var spanHumidity = $("<span></span>")
+  var forecastLiWindSpeed = $("<li></li>")
+  var spanWindSpeed = $("<span></span>")
+
+  // Appending new elements
+  var forecastCard = $(forecastWeather).append("div")
+  $(forecastCard).append(forecastCardTitle)
+  $(forecastCard).append(forecastLiIcon, forecastLiDescription, forecastLiHighTemp, forecastLiLowTemp, forecastLiHumidity, forecastLiWindSpeed)
+
+  $(forecastLiIcon).append(spanIcon);
+  $(forecastLiDescription).append(spanDescription);
+  $(forecastLiHighTemp).append(spanHigh);
+  $(forecastLiLowTemp).append(spanLow);
+  $(forecastLiHumidity).append(spanHumidity);
+  $(forecastLiWindSpeed).append(spanWindSpeed);
+
+
+  // Empty search variables
   var cityName = "";
   var cityHistoryArray = [];
 
@@ -55,7 +92,8 @@ $(document).ready(function () {
           date: data.data[0].datetime,
           weatherIcon: data.data[0].weather.icon,
           weatherStatus: data.data[0].weather.description,
-          temp: data.data[0].temp,
+          highTemp: data.data[0].high_temp,
+          LowTemp: data.data[0].low_temp,
           humidity: data.data[0].rh,
           windSpeed: data.data[0].wind_spd,
         };
