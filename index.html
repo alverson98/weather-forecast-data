@@ -30,34 +30,44 @@
       <!-- City search -->
       <label for="city-input">Search City Name:</label>
       <input type="text" id="city-input" />
+      <button id="submit-btn">Search</button>
 
       <!-- Search history here -->
       <ul id="search-history"></ul>
     </section>
     <!-- Weather content -->
     <main>
-      <!-- Heading for current weather -->
-      <h2>Current Weather</h2>
-      <!-- Current weather section -->
-      <div id="current-weather">
-        <!-- - the city name
-    - the date
-    - an icon representation of weather conditions
-    - the temperature
-    - the humidity
-    - the wind speed 
-    - the UV index -->
+      <div class="card current-section">
+        <!-- Heading for current weather -->
+        <h2 class="card-header">Current Weather</h2>
+        <!-- Current weather section -->
+        <div class="card-body">
+          <h3 class="card-title current-city-date"></h3>
+          <ul>
+            <li class="card-text"><span id="current-icon"></span></li>
+            <li class="card-text"><span id="current-description"></span></li>
+            <li class="card-text">Temperature:<span id="current-temp"></span></li>
+            <li class="card-text">Humidity:<span id="current-humidity"></span></li>
+            <li class="card-text">
+              Wind Speed:<span id="current-wind-speed"></span>
+            </li>
+            <li class="card-text">UV Index:<span class="current-uv"></span></li>
+          </ul>
+        </div>
       </div>
 
       <!-- Forecast -->
-      <div id="forecast">
+
+      <div class="forecast-section">
         <h2>5-day Forecast</h2>
-        <!-- appended div for each day -->
-        <!-- - the date
+        <div id="forecast-divs" class="row">
+          <!-- appended div for each day -->
+          <!-- - the date
     - icon representation of weather conditions
     - the temperature
     - the wind speed
     - the humidity -->
+        </div>
       </div>
     </main>
     <!-- JS links -->
