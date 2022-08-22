@@ -5,62 +5,46 @@ $(document).ready(function () {
   var cityInput = $("#city-input");
   var submitBtn = $("#submit-btn");
   var searchHistory = $("#search-history");
-  
-// Current Weather Section
-var currentCityDate = $("#current-city-date");
-var currentIcon = $("#current-icon")
-var currentDescription = $("#current-description")
-var currentTemp = $("#current-temp")
-var currentHumidity = $("#current-humidity")
-var currentWindSpeed = $("#current-wind-speed")
-var currentUV = $("#currentUV")
 
-// Forecast Section
+  // Current Weather Section
+  var currentCityDate = $("#current-city-date");
+  var currentIcon = $("#current-icon");
+  var currentDescription = $("#current-description");
+  var currentTemp = $("#current-temp");
+  var currentHumidity = $("#current-humidity");
+  var currentWindSpeed = $("#current-wind-speed");
+  var currentUV = $("#currentUV");
+
+  // Forecast Section
   var forecastWeather = $("#forecast-div");
-  var forecastCardTitle = $("h4")
-  var forecastLiIcon = $("<li></li>")
-  var spanIcon = $("<span></span>")
-  var forecastLiDescription = $("<li></li>")
-  var spanDescription = $("<span></span>")
-  var forecastLiHighTemp = $("<li></li>")
-  var spanHigh = $("<span></span>")
-  var forecastLiLowTemp = $("<li></li>")
-  var spanLow = $("<span></span>")
-  var forecastLiHumidity = $("<li></li>")
-  var spanHumidity = $("<span></span>")
-  var forecastLiWindSpeed = $("<li></li>")
-  var spanWindSpeed = $("<span></span>")
+  var forecastCard = $("div");
+  var forecastCardTitle = $("h4");
 
   // Appending new elements
-  var forecastCard = $(forecastWeather).append("div")
-  $(forecastCard).append(forecastCardTitle)
-  $(forecastCard).append(forecastLiIcon, forecastLiDescription, forecastLiHighTemp, forecastLiLowTemp, forecastLiHumidity, forecastLiWindSpeed)
+  //   $(forecastWeather).append(forecastCard);
+  //   $(forecastCard).append(forecastCardTitle);
+  //   $(forecastCard).append(forecastUl);
+  //   $(forecastUl).append(
+  //     forecastLiIcon,
+  //     forecastLiDescription,
+  //     forecastLiHighTemp,
+  //     forecastLiLowTemp,
+  //     forecastLiHumidity,
+  //     forecastLiWindSpeed
+  //   );
 
-  $(forecastLiIcon).append(spanIcon);
-  $(forecastLiDescription).append(spanDescription);
-  $(forecastLiHighTemp).append(spanHigh);
-  $(forecastLiLowTemp).append(spanLow);
-  $(forecastLiHumidity).append(spanHumidity);
-  $(forecastLiWindSpeed).append(spanWindSpeed);
+  // Assigning Classes to new elements
+  $(forecastCard).addClass("card");
+  $(forecastCardTitle).addClass("card-title");
 
-
-  // Empty search variables
-  var cityName = "";
-  var cityHistoryArray = [];
-
-  // API - weatherbit.io
-  var currentWeatherURL =
-    "https://api.weatherbit.io/v2.0/current?city=" +
-    cityName +
-    "&country=US&key=020dba26b42c4d61b7324a5ea43152c7&units=I";
-
-  var forecastWeatherURL =
-    "https://api.weatherbit.io/v2.0/forecast/daily?city=" +
-    cityName +
-    "&country=US&key=020dba26b42c4d61b7324a5ea43152c7&units=I&days=5";
+  var weatherIcon = "";
 
   // Current Weather Data
   function getCurrentWeather(cityName) {
+    var currentWeatherURL =
+      "https://api.weatherbit.io/v2.0/current?city=" +
+      cityName +
+      "&country=US&key=020dba26b42c4d61b7324a5ea43152c7&units=I";
     fetch(currentWeatherURL)
       .then(function (response) {
         return response.json();
@@ -75,13 +59,20 @@ var currentUV = $("#currentUV")
           temp: data.data[0].temp,
           humidity: data.data[0].rh,
           windSpeed: data.data[0].wind_spd,
-          uv: data.data[1].uv,
+          uv: data.data[0].uv,
         };
+
+        console.log(current);
+        displayCurrent(current, cityName);
       });
   }
 
   // Forecasted Weather
   function getForecastWeather(cityName) {
+    var forecastWeatherURL =
+      "https://api.weatherbit.io/v2.0/forecast/daily?city=" +
+      cityName +
+      "&country=US&key=020dba26b42c4d61b7324a5ea43152c7&units=I&days=5";
     fetch(forecastWeatherURL)
       .then(function (response) {
         return response.json();
@@ -97,33 +88,67 @@ var currentUV = $("#currentUV")
           humidity: data.data[0].rh,
           windSpeed: data.data[0].wind_spd,
         };
+        displayForecast(forecast, cityName);
       });
   }
-
-  // Submitting City - new input or history
-  $(submitBtn, cityBtn).on("click", function (event) {
-    event.preventDefault;
-    var clickEvent = $(event.target);
-    // new city vs. city history select
-    if (clickEvent.id === submitBtn) {
+  buttonClick();
+  function buttonClick() {
+    // Submitting City - new input
+    $(submitBtn).on("click", function (event) {
+      event.preventDefault;
       var cityName = $(cityInput).val().trim();
-    } else {
-      var cityName = clickEvent.innerText;
-    }
+      console.log(cityName);
+      var cityNameArray = [];
+      var storedCities = localStorage.setItem("cityName", cityName);
+      // JSON.parse(storedCities);
+      cityNameArray.push(storedCities);
 
-    // Calling functions for API calls
-    getCurrentWeather(cityName);
-    getForecastWeather(cityName);
+      // Calling functions for API calls
+      getCurrentWeather(cityName);
+      getForecastWeather(cityName);
 
-    // Calling Local storage function update
-    updateStorage(cityName);
-  });
+      // Calling Local storage function update
+      updateStorage(cityName, cityNameArray);
+    });
 
+    // Submitting city - history
+    //   $(cityBtn).on("click", function (event) {
+    //     event.preventDefault;
+    //       var cityName = $(cityInput).val().trim();
+    //       console.log(cityName);
+
+    //       // Calling functions for API calls
+    //        getCurrentWeather(cityName);
+    // getForecastWeather(cityName);
+
+    //       // Calling Local storage function update
+    //       updateStorage(cityName);
+    //     }
+    //   )});
+  }
   // Local Storage
-  function updateStorage(cityName) {
+  function updateStorage(cityName, cityNameArray) {
+    var cityHistoryArray = [];
     var cityHistory = JSON.parse(localStorage.getItem(cityHistory));
-    cityHistory.push(cityHistoryArray);
-
+    cityHistoryArray.push(cityHistory);
     localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
   }
+
+  // Displaying current weather
+  function displayCurrent(current, cityName) {
+    var weatherIconsURL =
+      "https://www.weatherbit.io/static/img/icons/" + weatherIcon + ".png";
+
+    var test = $(currentCityDate).text(cityName + ":     " + current.date);
+    $(currentIcon).text(weatherIconsURL);
+    $(currentDescription).text(current.weatherStatus);
+    $(currentTemp).text(current.temp);
+    $(currentHumidity).text(current.humidity);
+    $(currentWindSpeed).text(current.windSpeed);
+    $(currentUV).text(current.uv);
+    console.log(test);
+  }
+
+  // Displaying 5-day forecast
+  function displayForecast(forecast, cityName) {}
 });
