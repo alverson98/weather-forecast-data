@@ -96,19 +96,25 @@ $(document).ready(function () {
     // Submitting City - new input
     $(submitBtn).on("click", function (event) {
       event.preventDefault;
+      
       var cityName = $(cityInput).val().trim();
       console.log(cityName);
-      var cityNameArray = [];
-      var storedCities = localStorage.setItem("cityName", cityName);
-      // JSON.parse(storedCities);
-      cityNameArray.push(storedCities);
+
+      // function to access local storage
+      var cityStorage = getCityStorage();
+      var newCity = {
+        name: cityName,
+      };
+
+      cityStorage.push(newCity);
+
+      localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
 
       // Calling functions for API calls
       getCurrentWeather(cityName);
       getForecastWeather(cityName);
 
-      // Calling Local storage function update
-      updateStorage(cityName, cityNameArray);
+    
     });
 
     // Submitting city - history
@@ -127,11 +133,16 @@ $(document).ready(function () {
     //   )});
   }
   // Local Storage
-  function updateStorage(cityName, cityNameArray) {
-    var cityHistoryArray = [];
-    var cityHistory = JSON.parse(localStorage.getItem(cityHistory));
-    cityHistoryArray.push(cityHistory);
-    localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+  function getCityStorage() {
+    var cityStorage = [];
+
+    var storedCities = localStorage.getItem("cityStorage");
+
+    if (storedCities !== null) {
+      cityStorage = JSON.parse(storedCities);
+    }
+
+    return cityStorage;
   }
 
   // Displaying current weather
