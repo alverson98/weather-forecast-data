@@ -96,7 +96,7 @@ $(document).ready(function () {
     // Submitting City - new input
     $(submitBtn).on("click", function (event) {
       event.preventDefault;
-      
+
       var cityName = $(cityInput).val().trim();
       console.log(cityName);
 
@@ -110,11 +110,12 @@ $(document).ready(function () {
 
       localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
 
+      // Calling function to display city buttons
+      displaySearchHistory();
+
       // Calling functions for API calls
       getCurrentWeather(cityName);
       getForecastWeather(cityName);
-
-    
     });
 
     // Submitting city - history
@@ -131,6 +132,20 @@ $(document).ready(function () {
     //       updateStorage(cityName);
     //     }
     //   )});
+  }
+
+  function displaySearchHistory() {
+    //Creating city history buttons
+    var cityStorage = getCityStorage();
+
+    for (var i = 0; i < cityStorage.length; i++) {
+      var historyLi = document.createElement("li");
+      $(searchHistory).append(historyLi);
+      var cityBtn = document.createElement("button");
+      $(historyLi).append(cityBtn);
+
+      $(cityBtn).text(cityStorage[i].name);
+    }
   }
   // Local Storage
   function getCityStorage() {
