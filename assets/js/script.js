@@ -22,8 +22,6 @@ $(document).ready(function () {
   // City History Buttons on page load
   displaySearchHistory();
 
-  var weatherIcon = "";
-
   // Current Weather Data
   function getCurrentWeather(cityName) {
     var currentWeatherURL =
@@ -153,10 +151,12 @@ $(document).ready(function () {
   // Displaying current weather
   function displayCurrent(current, cityName) {
     var weatherIconsURL =
-      "https://www.weatherbit.io/static/img/icons/" + weatherIcon + ".png";
+      '<img src="https://www.weatherbit.io/static/img/icons/' +
+      current.weatherIcon +
+      '.png"/>';
 
     $(currentCityDate).text(cityName + ":     " + current.date);
-    $(currentIcon).text(weatherIconsURL);
+    $(currentIcon).append(weatherIconsURL);
     $(currentDescription).text(current.weatherStatus);
     $(currentTemp).text(current.temp);
     $(currentHumidity).text(current.humidity);
@@ -165,12 +165,14 @@ $(document).ready(function () {
   }
 
   //Displaying 5-day forecast
-  function displayForecast(forecastData, cityName) {
-    var weatherIconsURL =
-      "https://www.weatherbit.io/static/img/icons/" + weatherIcon + ".png";
-
+  function displayForecast(forecastData) {
     // creating a card for each forecast day
     for (var i = 0; i < forecastData.data.length; i++) {
+      var weatherIconsURL =
+        '<img src="https://www.weatherbit.io/static/img/icons/' +
+        forecastData.data[i].weather.icon +
+        '.png"/>';
+
       var forecastCard = document.createElement("div");
       var forecastCardTitle = document.createElement("h4");
       var forecastUl = document.createElement("ul");
@@ -197,14 +199,15 @@ $(document).ready(function () {
         forecastLiHumidity,
         forecastLiWindSpeed
       );
+      //Displaying weather icon
+      $(forecastLiIcon).append(weatherIconsURL);
 
-      // Assigning Classes to appended elements
+      // Assigning Classes to appended elements for styling
       $(forecastCard).addClass("card");
       $(forecastCardTitle).addClass("card-title");
 
       // Adding text to display data
       $(forecastLiDate).text(forecastData.data[i].datetime);
-      $(forecastLiIcon).text(weatherIconsURL);
       $(forecastLiDescription).text(forecastData.data[i].weather.description);
       $(forecastLiHighTemp).text(forecastData.data[i].high_temp);
       $(forecastLiLowTemp).text(forecastData.data[i].low_temp);
