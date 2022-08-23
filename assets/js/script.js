@@ -78,9 +78,11 @@ $(document).ready(function () {
 
     // function to access local storage
     var cityStorage = getCityStorage();
+    console.log(cityStorage);
     var newCity = {
       name: cityName,
     };
+
     cityStorage.push(newCity);
 
     localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
@@ -109,6 +111,9 @@ $(document).ready(function () {
     //Creating city history buttons
     var cityStorage = getCityStorage();
 
+    // removing any buttons before appending to prevent repeated adds
+    searchHistory.empty();
+
     for (var i = 0; i < cityStorage.length; i++) {
       var historyLi = document.createElement("li");
       var cityBtn =
@@ -117,9 +122,9 @@ $(document).ready(function () {
         '">' +
         cityStorage[i].name +
         "</buttton>";
+      $(searchHistory).append(historyLi);
+      $(historyLi).append(cityBtn);
     }
-    $(searchHistory).append(historyLi);
-    $(historyLi).append(cityBtn);
   }
 
   // Local Storage
