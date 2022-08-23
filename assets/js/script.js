@@ -73,7 +73,7 @@ $(document).ready(function () {
   $(submitBtn).on("click", function (event) {
     event.preventDefault;
 
-    var cityName = $(cityInput).val().trim();
+    var cityName = $(cityInput).val().trim().toUpperCase();
     console.log(cityName);
 
     // Forcing user to enter valid city
@@ -89,7 +89,12 @@ $(document).ready(function () {
       name: cityName,
     };
 
-    cityStorage.push(newCity);
+    // Preventing new button to from being added when it already exists
+    var index = cityStorage.findIndex((object) => object.name === cityName);
+
+    if (index === -1) {
+      cityStorage.push(newCity);
+    }
 
     localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
 
