@@ -155,6 +155,10 @@ $(document).ready(function () {
       current.weatherIcon +
       '.png"/>';
 
+    // Removing previous weather icon
+    $(currentIcon).empty();
+
+    // Display weather data
     $(currentCityDate).text(cityName + ":     " + current.date);
     $(currentIcon).append(weatherIconsURL);
     $(currentDescription).text(current.weatherStatus);
@@ -173,6 +177,7 @@ $(document).ready(function () {
         forecastData.data[i].weather.icon +
         '.png"/>';
 
+        // creating new html elements
       var forecastCard = document.createElement("div");
       var forecastCardTitle = document.createElement("h4");
       var forecastUl = document.createElement("ul");
