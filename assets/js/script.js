@@ -5,6 +5,7 @@ $(document).ready(function () {
   var cityInput = $("#city-input");
   var submitBtn = $("#submit-btn");
   var searchHistory = $("#search-history");
+  var cityBtn = $(".city-btn");
 
   // Current Weather Section
   var currentCityDate = $("#current-city-date");
@@ -36,6 +37,9 @@ $(document).ready(function () {
   // Assigning Classes to new elements
   $(forecastCard).addClass("card");
   $(forecastCardTitle).addClass("card-title");
+
+  // City History Buttons on page load
+  displaySearchHistory();
 
   var weatherIcon = "";
 
@@ -91,48 +95,43 @@ $(document).ready(function () {
         displayForecast(forecast, cityName);
       });
   }
-  buttonClick();
-  function buttonClick() {
-    // Submitting City - new input
-    $(submitBtn).on("click", function (event) {
-      event.preventDefault;
 
-      var cityName = $(cityInput).val().trim();
-      console.log(cityName);
+  // Submitting City - new input
+  $(submitBtn).on("click", function (event) {
+    event.preventDefault;
 
-      // function to access local storage
-      var cityStorage = getCityStorage();
-      var newCity = {
-        name: cityName,
-      };
+    var cityName = $(cityInput).val().trim();
+    console.log(cityName);
 
-      cityStorage.push(newCity);
+    // function to access local storage
+    var cityStorage = getCityStorage();
+    var newCity = {
+      name: cityName,
+    };
 
-      localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
+    cityStorage.push(newCity);
 
-      // Calling function to display city buttons
-      displaySearchHistory();
+    localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
 
-      // Calling functions for API calls
-      getCurrentWeather(cityName);
-      getForecastWeather(cityName);
-    });
+    // Calling function to display city buttons
+    displaySearchHistory();
 
-    // Submitting city - history
-    //   $(cityBtn).on("click", function (event) {
-    //     event.preventDefault;
-    //       var cityName = $(cityInput).val().trim();
-    //       console.log(cityName);
+    // Calling functions for API calls
+    getCurrentWeather(cityName);
+    getForecastWeather(cityName);
+  });
 
-    //       // Calling functions for API calls
-    //        getCurrentWeather(cityName);
-    // getForecastWeather(cityName);
+  //Submitting city - history
+  $(cityBtn).on("click", function (event) {
+    event.preventDefault;
+    var eventTarget = event.target();
+    var cityName = eventTarget.innerText;
+    console.log(cityName);
 
-    //       // Calling Local storage function update
-    //       updateStorage(cityName);
-    //     }
-    //   )});
-  }
+    // Calling functions for API calls
+    getCurrentWeather(cityName);
+    getForecastWeather(cityName);
+  });
 
   function displaySearchHistory() {
     //Creating city history buttons
@@ -145,8 +144,11 @@ $(document).ready(function () {
       $(historyLi).append(cityBtn);
 
       $(cityBtn).text(cityStorage[i].name);
+      $(cityBtn).attr("id", "city" + [i]);
+      $(cityBtn).addClass("city-btn");
     }
   }
+
   // Local Storage
   function getCityStorage() {
     var cityStorage = [];
@@ -165,14 +167,13 @@ $(document).ready(function () {
     var weatherIconsURL =
       "https://www.weatherbit.io/static/img/icons/" + weatherIcon + ".png";
 
-    var test = $(currentCityDate).text(cityName + ":     " + current.date);
+    $(currentCityDate).text(cityName + ":     " + current.date);
     $(currentIcon).text(weatherIconsURL);
     $(currentDescription).text(current.weatherStatus);
     $(currentTemp).text(current.temp);
     $(currentHumidity).text(current.humidity);
     $(currentWindSpeed).text(current.windSpeed);
     $(currentUV).text(current.uv);
-    console.log(test);
   }
 
   // Displaying 5-day forecast
