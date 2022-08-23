@@ -16,27 +16,8 @@ $(document).ready(function () {
   var currentWindSpeed = $("#current-wind-speed");
   var currentUV = $("#currentUV");
 
-  // Forecast Section
+  // Forecast Section -
   var forecastWeather = $("#forecast-div");
-  var forecastCard = $("div");
-  var forecastCardTitle = $("h4");
-
-  // Appending new elements
-  //   $(forecastWeather).append(forecastCard);
-  //   $(forecastCard).append(forecastCardTitle);
-  //   $(forecastCard).append(forecastUl);
-  //   $(forecastUl).append(
-  //     forecastLiIcon,
-  //     forecastLiDescription,
-  //     forecastLiHighTemp,
-  //     forecastLiLowTemp,
-  //     forecastLiHumidity,
-  //     forecastLiWindSpeed
-  //   );
-
-  // Assigning Classes to new elements
-  $(forecastCard).addClass("card");
-  $(forecastCardTitle).addClass("card-title");
 
   // City History Buttons on page load
   displaySearchHistory();
@@ -83,16 +64,23 @@ $(document).ready(function () {
       })
       // setting variables of data from API
       .then(function (data) {
-        var forecast = {
-          date: data.data[0].datetime,
-          weatherIcon: data.data[0].weather.icon,
-          weatherStatus: data.data[0].weather.description,
-          highTemp: data.data[0].high_temp,
-          LowTemp: data.data[0].low_temp,
-          humidity: data.data[0].rh,
-          windSpeed: data.data[0].wind_spd,
-        };
-        displayForecast(forecast, cityName);
+        console.log(data);
+        var forecastData = data;
+        // var forecastDataArray = [];
+        // console.log(forecastDataArray);
+        // for (var i = 0; i < forecastData.length; i++) {
+        //   var forecast = {
+        //     date: data.data[i].datetime,
+        //     weatherIcon: data.data[i].weather.icon,
+        //     weatherStatus: data.data[i].weather.description,
+        //     highTemp: data.data[i].high_temp,
+        //     LowTemp: data.data[i].low_temp,
+        //     humidity: data.data[i].rh,
+        //     windSpeed: data.data[i].wind_spd,
+        //   };
+        // }
+        // forecastDataArray.push(forecast);
+        displayForecast(forecastData, cityName);
       });
   }
 
@@ -146,7 +134,6 @@ $(document).ready(function () {
       $(cityBtn).text(cityStorage[i].name);
       $(cityBtn).attr("id", cityStorage[i].name);
       $(cityBtn).addClass("city-btn");
-
     }
   }
 
@@ -177,6 +164,52 @@ $(document).ready(function () {
     $(currentUV).text(current.uv);
   }
 
-  // Displaying 5-day forecast
-  function displayForecast(forecast, cityName) {}
+  //Displaying 5-day forecast
+  function displayForecast(forecastData, cityName) {
+    var weatherIconsURL =
+      "https://www.weatherbit.io/static/img/icons/" + weatherIcon + ".png";
+
+    // creating a card for each forecast day
+    for (var i = 0; i < forecastData.data.length; i++) {
+      var forecastCard = document.createElement("div");
+      var forecastCardTitle = document.createElement("h4");
+      var forecastUl = document.createElement("ul");
+
+      // li for every required data to be displayed
+      var forecastLiDate = document.createElement("li");
+      var forecastLiIcon = document.createElement("li");
+      var forecastLiDescription = document.createElement("li");
+      var forecastLiHighTemp = document.createElement("li");
+      var forecastLiLowTemp = document.createElement("li");
+      var forecastLiHumidity = document.createElement("li");
+      var forecastLiWindSpeed = document.createElement("li");
+
+      // Appending new elements
+      $(forecastWeather).append(forecastCard);
+      $(forecastCard).append(forecastCardTitle);
+      $(forecastCard).append(forecastUl);
+      $(forecastUl).append(
+        forecastLiDate,
+        forecastLiIcon,
+        forecastLiDescription,
+        forecastLiHighTemp,
+        forecastLiLowTemp,
+        forecastLiHumidity,
+        forecastLiWindSpeed
+      );
+
+      // Assigning Classes to appended elements
+      $(forecastCard).addClass("card");
+      $(forecastCardTitle).addClass("card-title");
+
+      // Adding text to display data
+      $(forecastLiDate).text(forecastData.data[i].datetime);
+      $(forecastLiIcon).text(weatherIconsURL);
+      $(forecastLiDescription).text(forecastData.data[i].weather.description);
+      $(forecastLiHighTemp).text(forecastData.data[i].high_temp);
+      $(forecastLiLowTemp).text(forecastData.data[i].low_temp);
+      $(forecastLiHumidity).text(forecastData.data[i].rh);
+      $(forecastLiWindSpeed).text(forecastData.data[i].wind_spd);
+    }
+  }
 });
