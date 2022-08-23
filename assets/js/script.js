@@ -32,7 +32,8 @@ $(document).ready(function () {
       .then(function (response) {
         return response.json();
       })
-      // setting variables of data from API
+
+      // setting variables of data from API - use Math.round() to show whole number
       .then(function (data) {
         var current = {
           city: data.data[0].city_name,
@@ -80,7 +81,6 @@ $(document).ready(function () {
     var newCity = {
       name: cityName,
     };
-
     cityStorage.push(newCity);
 
     localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
@@ -111,14 +111,15 @@ $(document).ready(function () {
 
     for (var i = 0; i < cityStorage.length; i++) {
       var historyLi = document.createElement("li");
-      $(searchHistory).append(historyLi);
-      var cityBtn = document.createElement("button");
-      $(historyLi).append(cityBtn);
-
-      $(cityBtn).text(cityStorage[i].name);
-      $(cityBtn).attr("id", cityStorage[i].name);
-      $(cityBtn).addClass("city-btn");
+      var cityBtn =
+        '<button class="city-btn" id="' +
+        cityStorage[i].name +
+        '">' +
+        cityStorage[i].name +
+        "</buttton>";
     }
+    $(searchHistory).append(historyLi);
+    $(historyLi).append(cityBtn);
   }
 
   // Local Storage
@@ -152,13 +153,6 @@ $(document).ready(function () {
     $(currentHumidity).text(current.humidity + "%");
     $(currentWindSpeed).text(current.windSpeed + " m/s");
     $(currentUV).text(current.uv);
-
-    // UV index scale colors
-    // var low = ("background-color", "#6cff6c");
-    // var moderate = ("background-color", "#fcfc81");
-    // var high = ("background-color", "#ffad13");
-    // var veryHigh = ("background-color", "#ff5b5b");
-    // var extreme = ("background-color", "#e998e9");
 
     // Displaying color based on UV index - color guide/scale coming from epa.gov
     if (current.uv <= 2) {
