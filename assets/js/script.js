@@ -76,6 +76,12 @@ $(document).ready(function () {
     var cityName = $(cityInput).val().trim();
     console.log(cityName);
 
+    // Forcing user to enter valid city
+    if (cityName === "") {
+      alert("Please enter valid city.");
+      return;
+    }
+
     // function to access local storage
     var cityStorage = getCityStorage();
     console.log(cityStorage);
