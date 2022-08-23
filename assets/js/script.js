@@ -122,10 +122,10 @@ $(document).ready(function () {
   });
 
   //Submitting city - history
-  $(cityBtn).on("click", function (event) {
+  $(".city-btn").on("click", function (event) {
     event.preventDefault;
-    var eventTarget = event.target();
-    var cityName = eventTarget.innerText;
+    var eventTarget = event.target;
+    var cityName = eventTarget.id;
     console.log(cityName);
 
     // Calling functions for API calls
@@ -144,8 +144,9 @@ $(document).ready(function () {
       $(historyLi).append(cityBtn);
 
       $(cityBtn).text(cityStorage[i].name);
-      $(cityBtn).attr("id", "city" + [i]);
+      $(cityBtn).attr("id", cityStorage[i].name);
       $(cityBtn).addClass("city-btn");
+
     }
   }
 
