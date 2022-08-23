@@ -14,7 +14,7 @@ $(document).ready(function () {
   var currentTemp = $("#current-temp");
   var currentHumidity = $("#current-humidity");
   var currentWindSpeed = $("#current-wind-speed");
-  var currentUV = $("#currentUV");
+  var currentUV = $("#current-uv");
 
   // Forecast Section -
   var forecastWeather = $("#forecast-div");
@@ -39,10 +39,10 @@ $(document).ready(function () {
           date: data.data[0].datetime,
           weatherIcon: data.data[0].weather.icon,
           weatherStatus: data.data[0].weather.description,
-          temp: data.data[0].temp,
-          humidity: data.data[0].rh,
-          windSpeed: data.data[0].wind_spd,
-          uv: data.data[0].uv,
+          temp: Math.round(data.data[0].temp),
+          humidity: Math.round(data.data[0].rh),
+          windSpeed: Math.round(data.data[0].wind_spd),
+          uv: Math.round(data.data[0].uv),
         };
 
         console.log(current);
@@ -64,20 +64,6 @@ $(document).ready(function () {
       .then(function (data) {
         console.log(data);
         var forecastData = data;
-        // var forecastDataArray = [];
-        // console.log(forecastDataArray);
-        // for (var i = 0; i < forecastData.length; i++) {
-        //   var forecast = {
-        //     date: data.data[i].datetime,
-        //     weatherIcon: data.data[i].weather.icon,
-        //     weatherStatus: data.data[i].weather.description,
-        //     highTemp: data.data[i].high_temp,
-        //     LowTemp: data.data[i].low_temp,
-        //     humidity: data.data[i].rh,
-        //     windSpeed: data.data[i].wind_spd,
-        //   };
-        // }
-        // forecastDataArray.push(forecast);
         displayForecast(forecastData, cityName);
       });
   }
@@ -162,10 +148,44 @@ $(document).ready(function () {
     $(currentCityDate).text(cityName + ":     " + current.date);
     $(currentIcon).append(weatherIconsURL);
     $(currentDescription).text(current.weatherStatus);
-    $(currentTemp).text(current.temp);
-    $(currentHumidity).text(current.humidity);
-    $(currentWindSpeed).text(current.windSpeed);
+    $(currentTemp).text(current.temp + " °F");
+    $(currentHumidity).text(current.humidity + "%");
+    $(currentWindSpeed).text(current.windSpeed + " m/s");
     $(currentUV).text(current.uv);
+
+    // UV index scale colors
+    // var low = ("background-color", "#6cff6c");
+    // var moderate = ("background-color", "#fcfc81");
+    // var high = ("background-color", "#ffad13");
+    // var veryHigh = ("background-color", "#ff5b5b");
+    // var extreme = ("background-color", "#e998e9");
+
+    // Displaying color based on UV index - color guide/scale coming from epa.gov
+    if (current.uv <= 2) {
+      $(currentUV).css({
+        "background-color": "#6cff6c",
+        padding: "0 8px 0 8px",
+      });
+    } else if (current.uv <= 5 && current.uv >= 3) {
+      $(currentUV).css({
+        "background-color": "#fcfc81",
+        padding: "0 8px 0 8px",
+      });
+    } else if (current.uv <= 7 && current.uv >= 6) {
+      $(currentUV).css({
+        "background-color": "#ffad13",
+        padding: "0 8px 0 8px",
+      });
+    } else if (current.uv <= 10 && current.uv >= 8) {
+      $(currentUV).css({
+        "background-color": "#ff5b5b",
+        padding: "0 8px 0 8px",
+      });
+    } else
+      $(currentUV).css({
+        "background-color": "#e998e9",
+        padding: "0 8px 0 8px",
+      });
   }
 
   //Displaying 5-day forecast
@@ -177,7 +197,7 @@ $(document).ready(function () {
         forecastData.data[i].weather.icon +
         '.png"/>';
 
-        // creating new html elements
+      // creating new html elements
       var forecastCard = document.createElement("div");
       var forecastCardTitle = document.createElement("h4");
       var forecastUl = document.createElement("ul");
@@ -214,10 +234,18 @@ $(document).ready(function () {
       // Adding text to display data
       $(forecastLiDate).text(forecastData.data[i].datetime);
       $(forecastLiDescription).text(forecastData.data[i].weather.description);
-      $(forecastLiHighTemp).text(forecastData.data[i].high_temp);
-      $(forecastLiLowTemp).text(forecastData.data[i].low_temp);
-      $(forecastLiHumidity).text(forecastData.data[i].rh);
-      $(forecastLiWindSpeed).text(forecastData.data[i].wind_spd);
+      $(forecastLiHighTemp).text(
+        "High: " + Math.round(forecastData.data[i].high_temp) + " °F"
+      );
+      $(forecastLiLowTemp).text(
+        "Low: " + Math.round(forecastData.data[i].low_temp) + " °F"
+      );
+      $(forecastLiHumidity).text(
+        "Humidity: " + Math.round(forecastData.data[i].rh) + "%"
+      );
+      $(forecastLiWindSpeed).text(
+        "Wind Speed: " + Math.round(forecastData.data[i].wind_spd) + " m/s"
+      );
     }
   }
 });
