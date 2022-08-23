@@ -89,14 +89,18 @@ $(document).ready(function () {
       name: cityName,
     };
 
-    // Preventing new button to from being added when it already exists
+    // Preventing new button from being added when it already exists
     var index = cityStorage.findIndex((object) => object.name === cityName);
 
     if (index === -1) {
       cityStorage.push(newCity);
     }
 
+    //storing new city data
     localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
+
+    // clearing search bar after clicking search button
+    $(cityInput).val("");
 
     // Calling function to display city buttons
     displaySearchHistory();
