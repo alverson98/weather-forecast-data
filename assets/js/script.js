@@ -204,6 +204,9 @@ $(document).ready(function () {
 
   //Displaying 5-day forecast
   function displayForecast(forecastData) {
+    // removing previous forecast
+    $(forecastWeather).empty();
+
     // creating a card for each forecast day
     for (var i = 0; i < forecastData.data.length; i++) {
       var weatherIconsURL =
@@ -241,9 +244,10 @@ $(document).ready(function () {
       //Displaying weather icon
       $(forecastLiIcon).append(weatherIconsURL);
 
-      // Assigning Classes to appended elements for styling
+      // Assigning Classes/id to appended elements for styling
       $(forecastCard).addClass("card");
       $(forecastCardTitle).addClass("card-title");
+      $(forecastLiDate).attr("id", "forecast-date");
 
       // Adding text to display data
       $(forecastLiDate).text(forecastData.data[i].datetime);
