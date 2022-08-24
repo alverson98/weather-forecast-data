@@ -27,14 +27,22 @@ h1 {
 }
 
 .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 /* SEARCH SECTION */
 .search-section {
+    width: 28%;
 }
 
 .search-section label {
   font-size: 1.2rem;
+}
+
+#city-input {
+    width: 73%;
 }
 
 #submit-btn {
@@ -42,29 +50,69 @@ h1 {
   background-color: var(--pink);
   color: var(--light-pink);
   border-radius: 10px;
+  border: 1px solid var(--green);
+  width: 23%;
 }
 
 /* SEARCH HISTORY */
-#search-history {
+.search-history-section {
   padding: 20px 0 15px 0;
-  border-top: rgb(65, 106, 89, 0.7);
+  border-top: 1px solid rgb(65, 106, 89, .7);
+  margin-top: 10px;
 }
+
+#search-history li {
+    list-style-type: none;
+    padding-right: 35px;
+  }
 
 .city-btn {
   background-color: var(--pink);
   color: var(--light-pink);
   padding: 5px 10px 5px 10px;
+  margin: 5px 0 5px 0;
   border-radius: 10px;
+  border: 1px solid var(--green);
+  width: 100%;
 }
 
 /* WEATHER CONTENT */
-
 /* CURRENT WEATHER */
+.current {
+    width: 68%;
+}
+
+.current-section {
+  border: 2px solid var(--green);
+  margin: 0 25px 0 25px;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.card-header {
+  background-color: var(--green);
+  color: var(--light-pink);
+  text-align: center;
+  font-size: 2.1rem;
+}
+
+#current-city-date {
+  font-size: 1.8rem;
+}
+
+.current-section li {
+  list-style-type: none;
+  font-size: 1.2rem;
+}
+
+.current-section span {
+  font-size: 1.2rem;
+}
 
 /* FORECAST WEATHER - dynamically added in JS */
 .forecast-section {
-    margin: 0 25px 15px 25px;
-    width: 96%;
+  margin: 0 25px 15px 25px;
+  width: 96%;
 }
 
 .forecast-section h2 {
@@ -90,9 +138,9 @@ h1 {
 }
 
 #forecast-date {
-font-size: 1.8rem;
+  font-size: 1.8rem;
 }
 
 #forecast-div li {
- list-style-type: none;
+  list-style-type: none;
 }
