@@ -108,8 +108,11 @@ $(document).ready(function () {
     // Calling functions for API calls
     getCurrentWeather(cityName);
     getForecastWeather(cityName);
+    historyClick();
   });
 
+  historyClick();
+  function historyClick() {
   //Submitting city - history
   $(".city-btn").on("click", function (event) {
     event.preventDefault;
@@ -120,7 +123,7 @@ $(document).ready(function () {
     // Calling functions for API calls
     getCurrentWeather(cityName);
     getForecastWeather(cityName);
-  });
+  }); }
 
   function displaySearchHistory() {
     //Creating city history buttons
