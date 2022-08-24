@@ -27,14 +27,14 @@ h1 {
 }
 
 .content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 /* SEARCH SECTION */
 .search-section {
-    width: 28%;
+  width: 28%;
 }
 
 .search-section label {
@@ -42,7 +42,7 @@ h1 {
 }
 
 #city-input {
-    width: 73%;
+  width: 73%;
 }
 
 #submit-btn {
@@ -57,14 +57,14 @@ h1 {
 /* SEARCH HISTORY */
 .search-history-section {
   padding: 20px 0 15px 0;
-  border-top: 1px solid rgb(65, 106, 89, .7);
+  border-top: 1px solid rgb(65, 106, 89, 0.7);
   margin-top: 10px;
 }
 
 #search-history li {
-    list-style-type: none;
-    padding-right: 35px;
-  }
+  list-style-type: none;
+  padding-right: 35px;
+}
 
 .city-btn {
   background-color: var(--pink);
@@ -79,7 +79,7 @@ h1 {
 /* WEATHER CONTENT */
 /* CURRENT WEATHER */
 .current {
-    width: 68%;
+  width: 68%;
 }
 
 .current-section {
@@ -143,4 +143,36 @@ h1 {
 
 #forecast-div li {
   list-style-type: none;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 1000px) {
+  .search-section {
+    width: 100%;
+  }
+  .current {
+    width: 100%;
+  }
+  #forecast-div .card {
+    width: 33%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #city-input {
+    width: 100%;
+  }
+  #submit-btn {
+    width: 30%;
+  }
+  #forecast-div .card {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #forecast-div .card {
+    width: 100%;
+  }
 }
